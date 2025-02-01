@@ -1,0 +1,35 @@
+name: Build
+on:
+    push:
+        branches: [ "**" ]
+        tags-ignore: [ "**" ]
+    pull_request:
+    release:
+        types: [ released ]
+
+jobs:
+    build:
+        # Only run on PRs if the source branch is on someone else's repo
+        if: ${{ github.event_name != 'pull_request' || github.repository != github.event.pull_request.head.repo.full_name }}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: "checkout git repository"
+                uses: actions/checkout@v4
+            -   name: "set execute permission for gradle wrapper"
+                run: chmod +x ./gradlew
+            -   name: "validate gradle wrapper"
+                uses: gradle/actions/wrapper-validation@v4
+            -   name: "setup jdk"
+                uses: actions/setup-java@v4
+                with:
+                    distribution: 'temurin'
+                    java-version: "21"
+            -   name: "setup gradle"
+                uses: gradle/actions/setup-gradle@v4
+            -   name: "build"
+                run: ./gradlew build --stacktrace
+            -   name: "upload artifacts"
+                uses: actions/upload-artifact@v4
+                with:
+                    name: Jars
+                    path: api/build/libs/*.jar
