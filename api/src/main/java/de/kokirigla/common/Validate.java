@@ -26,8 +26,6 @@ package de.kokirigla.common;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Contains methods to assist in checking for illegal method parameters.
  *
@@ -47,11 +45,15 @@ public final class Validate {
      * @param name   the name of the object
      * @param <T>    the object type
      * @return the object, guaranteed to be non-null
-     * @throws NullPointerException if the object is null
+     * @throws IllegalStateException if the object is null
      * @since 1.0.0
      */
     public static <T> T nonNull(final @Nullable T object, final @Nullable String name) {
-        return requireNonNull(object, name == null ? "unnamed object" : name + " must not be null");
+        if (object == null) {
+            throw new IllegalStateException(name == null ? "unnamed object" : name + " must not be be null");
+        } else {
+            return object;
+        }
     }
 
     /**
@@ -61,8 +63,10 @@ public final class Validate {
      * @param <T>    the object type
      * @return the object, guaranteed to be non-null
      * @throws NullPointerException if the object is null
+     * @deprecated since 1.0.0, use {@link #nonNull(Object, String)} instead.
      * @since 1.0.0
      */
+    @Deprecated(since = "1.0.0")
     public static <T> T nonNull(final @Nullable T object) {
         return nonNull(object, null);
     }
