@@ -40,17 +40,27 @@ class ReflectiveExaminablePropertiesSourceTests {
         @SuppressWarnings("unchecked")
         final List<ExaminableProperty> properties = (List<ExaminableProperty>) te.examinableProperties().toList();
 
-        assertEquals(2, properties.size());
-        assertEquals("aName", properties.getFirst().name());
-        assertEquals("age", properties.getLast().name());
+        assertEquals(4, properties.size());
+        assertEquals("pi", properties.get(0).name());
+        assertEquals("aName", properties.get(1).name());
+        assertEquals("aName", properties.get(2).name());
+        assertEquals("age", properties.get(3).name());
     }
 
-    static class TestExaminable extends AbstractExaminable {
+    static abstract class AbstractTestExaminable extends AbstractExaminable {
+
+        private final @Examine double pi = Math.PI;
+        private final @Examine(name = "aName") String nameButNot = "foo"; // same name as the child classes field is okay
+
+    }
+
+    static final class TestExaminable extends AbstractTestExaminable {
         private final @Examine(name = "aName") String name;
         private final @Examine int age;
         private final char thisWillNotBeExamined = 'd';
 
         TestExaminable(final String name, final int age) {
+            super();
             this.name = name;
             this.age = age;
         }

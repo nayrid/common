@@ -32,6 +32,7 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -43,7 +44,7 @@ import org.jspecify.annotations.NullUnmarked;
 /**
  * Implementation for {@link ReflectiveExaminableProperties}.
  *
- * @author kashike
+ * @author kashike, kokiriglade
  * @see <a
  *     href="https://github.com/KyoriPowered/examination/tree/05bdd6b9a16f7bd95058f183d593011814bd5e45/reflection/src/main/java/net/kyori/examination/reflection">reflection
  *     branch</a>
@@ -60,27 +61,38 @@ final class ReflectiveExaminablePropertiesImpl implements ReflectiveExaminablePr
 
     public static ReflectiveExaminablePropertiesImpl forFields(final Object object) {
         final List<Supplier<ExaminableProperty>> properties = new ArrayList<>();
-        for (final Field field : object.getClass().getDeclaredFields()) {
-            final @org.jetbrains.annotations.Nullable Examine examine = field.getAnnotation(Examine.class);
-            if (examine != null) {
-                field.setAccessible(true);
 
-                final String name = name(field, examine);
-                final MethodHandle handle;
-                try {
-                    handle = MethodHandles.lookup().unreflectGetter(field);
-                } catch (final IllegalAccessException e) {
-                    throw new ReflectiveExaminationException(e);
-                }
-                properties.add(() -> {
-                    final Object value;
+        // collecting all superclasses and then reversing it so that the super-est classes examinable fields are obtained first
+        final List<Class<?>> classes = new ArrayList<>();
+        for (Class<?> clazz = object.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
+            classes.add(clazz);
+        }
+        Collections.reverse(classes);
+
+        for (final Class<?> clazz : classes) {
+            for (final Field field : clazz.getDeclaredFields()) {
+                final @org.jetbrains.annotations.Nullable Examine examine = field.getAnnotation(
+                    Examine.class);
+                if (examine != null) {
+                    field.setAccessible(true);
+
+                    final String name = name(field, examine);
+                    final MethodHandle handle;
                     try {
-                        value = handle.invoke(object);
-                    } catch (final Throwable e) {
+                        handle = MethodHandles.lookup().unreflectGetter(field);
+                    } catch (final IllegalAccessException e) {
                         throw new ReflectiveExaminationException(e);
                     }
-                    return ExaminableProperty.of(name, value);
-                });
+                    properties.add(() -> {
+                        final Object value;
+                        try {
+                            value = handle.invoke(object);
+                        } catch (final Throwable e) {
+                            throw new ReflectiveExaminationException(e);
+                        }
+                        return ExaminableProperty.of(name, value);
+                    });
+                }
             }
         }
         return new ReflectiveExaminablePropertiesImpl(properties);
