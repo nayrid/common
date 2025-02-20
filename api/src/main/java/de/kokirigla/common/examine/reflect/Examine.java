@@ -35,7 +35,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks a field which should be examined by {@link ReflectiveExaminationException}.
+ * Marks a field which should be examined by {@link ReflectiveExaminableProperties}.
  *
  * @author kashike
  * @see <a
