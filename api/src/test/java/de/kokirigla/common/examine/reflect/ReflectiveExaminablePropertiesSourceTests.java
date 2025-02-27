@@ -25,7 +25,10 @@ package de.kokirigla.common.examine.reflect;
 
 import de.kokirigla.common.examine.AbstractExaminable;
 import java.util.List;
+import java.util.stream.Stream;
+import net.kyori.examination.Examinable;
 import net.kyori.examination.ExaminableProperty;
+import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ReflectiveExaminablePropertiesSourceTests {
 
     @Test
-    void test() {
+    void testClassWithParent() {
         final TestExaminable te = new TestExaminable("kashike", 0);
         @SuppressWarnings("unchecked")
         final List<ExaminableProperty> properties = (List<ExaminableProperty>) te.examinableProperties().toList();
@@ -45,6 +48,25 @@ class ReflectiveExaminablePropertiesSourceTests {
         assertEquals("aName", properties.get(1).name());
         assertEquals("aName", properties.get(2).name());
         assertEquals("age", properties.get(3).name());
+    }
+
+    @Test
+    void testRecord() {
+        final TestRecord testRecord = new TestRecord("test record");
+        @SuppressWarnings("unchecked")
+        final List<ExaminableProperty> propertes = (List<ExaminableProperty>) testRecord.examinableProperties().toList();
+
+        assertEquals(1, propertes.size());
+        assertEquals("name", propertes.getFirst().name());
+    }
+
+    record TestRecord(@Examine String name) implements Examinable {
+
+        @Override
+        public @NotNull Stream<? extends ExaminableProperty> examinableProperties() {
+            return ReflectiveExaminableProperties.forFields(this).examinableProperties();
+        }
+
     }
 
     static abstract class AbstractTestExaminable extends AbstractExaminable {
