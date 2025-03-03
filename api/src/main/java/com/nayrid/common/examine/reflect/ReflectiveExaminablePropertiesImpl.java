@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common.examine.reflect;
+package com.nayrid.common.examine.reflect;
 
 /*
  * Adapted from kyori's long-abandoned reflection branch on examination - MIT license!

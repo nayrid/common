@@ -21,21 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common.examine.reflect;
+package com.nayrid.common.examine.reflect;
 
 /*
  * Adapted from kyori's long-abandoned reflection branch on examination - MIT license!
  * https://github.com/KyoriPowered/examination/tree/05bdd6b9a16f7bd95058f183d593011814bd5e45/reflection/src/main/java/net/kyori/examination/reflection
  */
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.stream.Stream;
+import net.kyori.examination.ExaminableProperty;
+import org.jspecify.annotations.NullMarked;
 
 /**
- * Marks a field which should be examined by {@link ReflectiveExaminableProperties}.
+ * An examinable property source which provides {@link ExaminableProperty properties} by
+ * reflectively examining an object.
  *
  * @author kashike
  * @see <a
@@ -43,19 +42,27 @@ import java.lang.annotation.Target;
  *     branch</a>
  * @since 1.1.0
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface Examine {
+@NullMarked
+public sealed interface ReflectiveExaminableProperties permits ReflectiveExaminablePropertiesImpl {
 
     /**
-     * Gets the name.
+     * Creates an examinable property source from the fields in {@code object} annotated with
+     * {@link Examine}.
      *
-     * <p>The name of the field will be used if no value is provided.</p>
-     *
-     * @return the name
+     * @param object the object to be examined
+     * @return an examinable property source
      * @since 1.1.0
      */
-    String name() default "";
+    static ReflectiveExaminableProperties forFields(final Object object) {
+        return ReflectiveExaminablePropertiesImpl.forFields(object);
+    }
+
+    /**
+     * Gets a stream of examinable properties.
+     *
+     * @return a stream of examinable properties
+     * @since 1.1.0
+     */
+    Stream<? extends ExaminableProperty> examinableProperties();
 
 }

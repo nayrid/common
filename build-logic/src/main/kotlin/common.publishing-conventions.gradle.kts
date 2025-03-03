@@ -6,22 +6,22 @@ plugins {
 publishing {
     repositories {
         maven {
-            name = "kokirigladeSnapshots"
-            url = uri("https://repo.kokirigla.de/snapshots")
+            name = "nayridSnapshots"
+            url = uri("https://repo.nayrid.com/snapshots")
             credentials {
-                username = project.findProperty("kokirigladeUsername") as String?
+                username = project.findProperty("nayridUsername") as String?
                     ?: System.getenv("MAVEN_NAME")
-                password = project.findProperty("kokirigladePassword") as String?
+                password = project.findProperty("nayridPassword") as String?
                     ?: System.getenv("MAVEN_SECRET")
             }
         }
         maven {
-            name = "kokirigladeReleases"
-            url = uri("https://repo.kokirigla.de/releases")
+            name = "nayridReleases"
+            url = uri("https://repo.nayrid.com/releases")
             credentials {
-                username = project.findProperty("kokirigladeUsername") as String?
+                username = project.findProperty("nayridUsername") as String?
                     ?: System.getenv("MAVEN_NAME")
-                password = project.findProperty("kokirigladePassword") as String?
+                password = project.findProperty("nayridPassword") as String?
                     ?: System.getenv("MAVEN_SECRET")
             }
         }

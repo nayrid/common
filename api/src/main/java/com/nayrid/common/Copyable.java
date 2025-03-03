@@ -21,28 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common;
+package com.nayrid.common;
 
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 /**
- * Represents something that can be built.
+ * Something that can be copied.
  *
- * @param <T> the built type
- * @param <B> the builder type
- * @since 1.1.0
+ * @param <T> the implementing type
+ * @since 1.0.0
  */
 @NullMarked
-public interface Buildable<T, B extends Builder<T>> {
+public interface Copyable<T extends Copyable<T>> {
 
     /**
-     * Create a builder from this thing.
+     * Creates and returns a copy of the object.
      *
-     * @return a builder
+     * @return a copy of this object
      * @since 1.0.0
      */
     @Contract(value = "-> new", pure = true)
-    B toBuilder();
+    T copy();
 
 }

@@ -21,47 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common;
+package com.nayrid.common.examine.reflect;
 
-import java.util.function.Consumer;
-import org.jetbrains.annotations.Contract;
+import java.io.Serial;
 import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
 
 /**
- * Represents a builder of something.
+ * This exception is thrown when an error occurs during {@link ReflectiveExaminableProperties reflective examination}.
  *
- * @param <T> the type being built
  * @since 1.1.0
  */
 @NullMarked
-public interface Builder<T> {
+public final class ReflectiveExaminationException extends RuntimeException {
+
+    @Serial private static final long serialVersionUID = -1019076612189799077L;
 
     /**
-     * Configures {@code builder} using {@code consumer} and then builds.
+     * Creates a new {@link ReflectiveExaminationException}.
      *
-     * @param builder the builder
-     * @param consumer the builder consume
-     * @param <T> the type to be built
-     * @param <B> the builder type
-     * @return the built thing
+     * @param cause the cause
      * @since 1.1.0
      */
-    @Contract(mutates = "param1")
-    static <T, B extends Builder<T>> T configureAndBuild(final B builder, final @Nullable Consumer<? super B> consumer) {
-        if (consumer != null) {
-            consumer.accept(builder);
-        }
-        return builder.build();
+    public ReflectiveExaminationException(final Throwable cause) {
+        super(cause);
     }
-
-    /**
-     * Builds.
-     *
-     * @return the built thing
-     * @since 1.1.0
-     */
-    @Contract(value = "-> new", pure = true)
-    T build();
 
 }

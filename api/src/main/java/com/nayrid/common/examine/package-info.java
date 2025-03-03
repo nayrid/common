@@ -1,4 +1,4 @@
 /**
  * Utilities for examinating objects.
  */
-package de.kokirigla.common.examine;
+package com.nayrid.common.examine;

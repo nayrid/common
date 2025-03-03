@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common.util;
+package com.nayrid.common.util;
 
 import java.util.stream.Stream;
 import net.kyori.examination.Examinable;
 import org.jspecify.annotations.NullMarked;
 
-import static de.kokirigla.common.examine.examiner.RecordLikeStringExaminer.simpleEscaping;
+import static com.nayrid.common.examine.examiner.RecordLikeStringExaminer.simpleEscaping;
 
 /**
  * Utilities for strings.

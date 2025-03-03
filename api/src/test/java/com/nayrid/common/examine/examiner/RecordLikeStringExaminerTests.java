@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common.examine.examiner;
+package com.nayrid.common.examine.examiner;
 
 import java.util.Arrays;
 import java.util.Collections;

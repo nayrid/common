@@ -1,4 +1,4 @@
 /**
  * Contains various utility classes.
  */
-package de.kokirigla.common.util;
+package com.nayrid.common.util;

@@ -21,27 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common;
+package com.nayrid.common.examine;
 
-import org.jetbrains.annotations.Contract;
+import com.nayrid.common.examine.reflect.ReflectiveExaminableProperties;
+import com.nayrid.common.util.StringUtils;
+import java.util.stream.Stream;
+import net.kyori.examination.Examinable;
+import net.kyori.examination.ExaminableProperty;
+import net.kyori.examination.Examiner;
 import org.jspecify.annotations.NullMarked;
 
 /**
- * Something that can be copied.
+ * An abstract implementation of {@link Examinable}.
  *
- * @param <T> the implementing type
- * @since 1.0.0
+ * @since 1.1.0
  */
 @NullMarked
-public interface Copyable<T extends Copyable<T>> {
+public abstract class AbstractExaminable implements Examinable {
 
-    /**
-     * Creates and returns a copy of the object.
-     *
-     * @return a copy of this object
-     * @since 1.0.0
-     */
-    @Contract(value = "-> new", pure = true)
-    T copy();
+    @Override
+    public abstract String examinableName();
+
+    @Override
+    public Stream<? extends ExaminableProperty> examinableProperties() {
+        return ReflectiveExaminableProperties.forFields(this).examinableProperties();
+    }
+
+    @SuppressWarnings("NullableProblems")
+    @Override
+    public final <R> R examine(final Examiner<R> examiner) {
+        return Examinable.super.examine(examiner);
+    }
+
+    @Override
+    public final String toString() {
+        return StringUtils.asString(this);
+    }
 
 }

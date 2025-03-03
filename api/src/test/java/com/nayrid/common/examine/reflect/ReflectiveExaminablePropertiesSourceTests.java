@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common.examine.reflect;
+package com.nayrid.common.examine.reflect;
 
-import de.kokirigla.common.examine.AbstractExaminable;
+import com.nayrid.common.examine.AbstractExaminable;
 import java.util.List;
 import java.util.stream.Stream;
 import net.kyori.examination.Examinable;

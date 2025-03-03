@@ -21,41 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common.examine;
+package com.nayrid.common;
 
-import de.kokirigla.common.examine.reflect.ReflectiveExaminableProperties;
-import de.kokirigla.common.util.StringUtils;
-import java.util.stream.Stream;
-import net.kyori.examination.Examinable;
-import net.kyori.examination.ExaminableProperty;
-import net.kyori.examination.Examiner;
+import java.util.function.Consumer;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
- * An abstract implementation of {@link Examinable}.
+ * Represents a builder of something.
  *
+ * @param <T> the type being built
  * @since 1.1.0
  */
 @NullMarked
-public abstract class AbstractExaminable implements Examinable {
+public interface Builder<T> {
 
-    @Override
-    public abstract String examinableName();
-
-    @Override
-    public Stream<? extends ExaminableProperty> examinableProperties() {
-        return ReflectiveExaminableProperties.forFields(this).examinableProperties();
+    /**
+     * Configures {@code builder} using {@code consumer} and then builds.
+     *
+     * @param builder the builder
+     * @param consumer the builder consume
+     * @param <T> the type to be built
+     * @param <B> the builder type
+     * @return the built thing
+     * @since 1.1.0
+     */
+    @Contract(mutates = "param1")
+    static <T, B extends Builder<T>> T configureAndBuild(final B builder, final @Nullable Consumer<? super B> consumer) {
+        if (consumer != null) {
+            consumer.accept(builder);
+        }
+        return builder.build();
     }
 
-    @SuppressWarnings("NullableProblems")
-    @Override
-    public final <R> R examine(final Examiner<R> examiner) {
-        return Examinable.super.examine(examiner);
-    }
-
-    @Override
-    public final String toString() {
-        return StringUtils.asString(this);
-    }
+    /**
+     * Builds.
+     *
+     * @return the built thing
+     * @since 1.1.0
+     */
+    @Contract(value = "-> new", pure = true)
+    T build();
 
 }

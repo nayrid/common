@@ -1,11 +1,6 @@
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-        maven {
-            name = "kokiriglade releases"
-            url = uri("https://repo.kokirigla.de/releases")
-        }
-
     }
 }
 

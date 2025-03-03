@@ -21,29 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common.examine.reflect;
+package com.nayrid.common;
 
-import java.io.Serial;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 /**
- * This exception is thrown when an error occurs during {@link ReflectiveExaminableProperties reflective examination}.
+ * Represents something that can be built.
  *
+ * @param <T> the built type
+ * @param <B> the builder type
  * @since 1.1.0
  */
 @NullMarked
-public final class ReflectiveExaminationException extends RuntimeException {
-
-    @Serial private static final long serialVersionUID = -1019076612189799077L;
+public interface Buildable<T, B extends Builder<T>> {
 
     /**
-     * Creates a new {@link ReflectiveExaminationException}.
+     * Create a builder from this thing.
      *
-     * @param cause the cause
-     * @since 1.1.0
+     * @return a builder
+     * @since 1.0.0
      */
-    public ReflectiveExaminationException(final Throwable cause) {
-        super(cause);
-    }
+    @Contract(value = "-> new", pure = true)
+    B toBuilder();
 
 }

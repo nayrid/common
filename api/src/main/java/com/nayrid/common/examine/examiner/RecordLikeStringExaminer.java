@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common.examine.examiner;
+package com.nayrid.common.examine.examiner;
 
-import de.kokirigla.common.util.StringUtils;
+import com.nayrid.common.util.StringUtils;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.Function;

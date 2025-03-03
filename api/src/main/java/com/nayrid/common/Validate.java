@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.kokirigla.common;
+package com.nayrid.common;
 
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
