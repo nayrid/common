@@ -12,7 +12,7 @@ publishing {
                 username = project.findProperty("nayridUsername") as String?
                     ?: System.getenv("MAVEN_NAME")
                 password = project.findProperty("nayridPassword") as String?
-                    ?: System.getenv("MAVEN_SECRET")
+                    ?: System.getenv("MAVEN_TOKEN")
             }
         }
         maven {
@@ -22,7 +22,7 @@ publishing {
                 username = project.findProperty("nayridUsername") as String?
                     ?: System.getenv("MAVEN_NAME")
                 password = project.findProperty("nayridPassword") as String?
-                    ?: System.getenv("MAVEN_SECRET")
+                    ?: System.getenv("MAVEN_TOKEN")
             }
         }
     }
