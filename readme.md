@@ -1,6 +1,11 @@
 # common
 
-nayrid's commons library.
+nayrid's common library code.
+
+### Modules
+
+- `common-api`: general-purpose useful code that I find myself repeating often
+- `common-examine`: [examination](https://github/com/KyoriPowered/examination) stuff
 
 ## Gradle
 
@@ -15,5 +20,7 @@ maven {
 And then use this library (change `(the latest version)` to the latest version):
 
 ```kotlin
-compile("com.nayrid.common:common-api:(the latest version)")
+implementation("com.nayrid.common:common-api:(the latest version)")
+
+implementation("com.nayrid.common:common-examine:(the latest version)")
 ```
