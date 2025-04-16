@@ -5,7 +5,7 @@ nayrid's common library code.
 ### Modules
 
 - `common-api`: general-purpose useful code that I find myself repeating often
-- `common-examine`: [examination](https://github/com/KyoriPowered/examination) stuff
+- `common-examine`: [examination](https://github.com/KyoriPowered/examination) stuff
 
 ## Gradle
 
