@@ -58,8 +58,11 @@ tasks {
     javadoc {
         (options as StandardJavadocDocletOptions).apply {
             isFailOnError = false
-            links("https://jspecify.dev/docs/api/")
-            links("https://javadoc.io/doc/org.jetbrains/annotations/${libs.versions.org.jetbrains.annotations.get()}/")
+            links(
+                "https://jspecify.dev/docs/api/",
+                "https://javadoc.io/doc/net.kyori/examination-api/1.3.0",
+                "https://javadoc.io/doc/org.jetbrains/annotations/${libs.versions.org.jetbrains.annotations.get()}/"
+            )
         }
     }
     test {
